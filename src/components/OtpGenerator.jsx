@@ -58,7 +58,9 @@ export const OtpGenerator = () => {
             <input
               key={i}
               ref={(e) => (inputRefs.current[i] = e)}
-              type="number"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               value={value}
               maxLength={1}
               onChange={(e) => handleChange(i, e.target.value)}
