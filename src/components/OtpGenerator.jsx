@@ -38,6 +38,7 @@ export const OtpGenerator = () => {
 
   const sendCode = () => {
     toast.dark("Code send to your email");
+    setInputs(Array(6).fill(""));
   };
 
   return (
@@ -78,13 +79,15 @@ export const OtpGenerator = () => {
         </button>
 
         <div className="text-center">
-          <span className="text-gray-500 text-lg">Didn't receive code?</span>
-          <span
-            className="text-blue-500 underline cursor-pointer text-lg ml-1"
-            onClick={sendCode}
-          >
-            send again
-          </span>
+          <p className="text-gray-500 text-lg">
+            Didn't receive code?
+            <span
+              className="text-blue-500 underline cursor-pointer text-lg ml-1"
+              onClick={sendCode}
+            >
+              send again
+            </span>
+          </p>
         </div>
       </div>
     </div>
