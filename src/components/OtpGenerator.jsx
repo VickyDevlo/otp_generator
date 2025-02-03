@@ -43,12 +43,12 @@ export const OtpGenerator = () => {
 
   return (
     <div className="container mx-auto h-screen flex items-center justify-center px-2">
-      <div className=" flex flex-col bg-white md:w-[700px] rounded-lg shadow-2xl items-center justify-center gap-6 py-12 px-3">
+      <div className=" flex flex-col bg-white md:w-[550px] rounded-lg shadow-2xl items-center justify-center gap-6  py-10 px-3">
         <div className="flex flex-col items-center gap-2">
           <h1 className="font-semibold text-gray-800 max-sm:text-3xl text-4xl tracking-widest">
             Verify
           </h1>
-          <p className="font-semibold text-center max-sm:text-lg text-xl text-gray-500 tracking-widest px-3">
+          <p className=" text-center max-sm:text-lg text-xl text-gray-500 tracking-widest px-3">
             Code was sent to you via email
           </p>
         </div>
