@@ -2,7 +2,7 @@ import React from "react";
 import { Wrapper } from "./Wrapper";
 import { HiBadgeCheck } from "react-icons/hi";
 
-export const SuccsessModel = ({ setShowModel }) => {
+export const SuccessModel = ({ setShowModel }) => {
   return (
     <Wrapper>
       <div className="flex flex-col items-center gap-2">

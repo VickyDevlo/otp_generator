@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { OtpGenerator } from "./components/OtpGenerator";
-import { SuccsessModel } from "./components/SuccsessModel";
+import { SuccessModel } from "./components/SuccessModel";
 
 function App() {
   const [showModel, setShowModel] = useState(false);
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       {showModel ? (
-        <SuccsessModel setShowModel={setShowModel} />
+        <SuccessModel setShowModel={setShowModel} />
       ) : (
         <OtpGenerator setShowModel={setShowModel} />
       )}

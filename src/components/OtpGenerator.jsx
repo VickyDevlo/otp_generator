@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
-import { SuccsessModel } from "./SuccsessModel";
+import { toast } from "react-toastify"; 
 import { Wrapper } from "./Wrapper";
 
 export const OtpGenerator = ({ setShowModel }) => {
