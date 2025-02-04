@@ -32,8 +32,6 @@ export const OtpGenerator = () => {
 
   const verifyCode = () => {
     setShowSuccess(true);
-    toast.success("Code Verified Successfully!");
-
     setTimeout(() => {
       setInputs(Array(6).fill(""));
       setShowSuccess(false);
@@ -42,7 +40,7 @@ export const OtpGenerator = () => {
   };
 
   const sendCode = () => {
-    toast.dark("Code sent to your email");
+    toast.success("Code sent to your email");
     setInputs(Array(6).fill(""));
     setTimeout(() => inputRefs.current[0]?.focus(), 200);
   };
@@ -55,10 +53,10 @@ export const OtpGenerator = () => {
     <div className="container mx-auto h-screen flex items-center justify-center px-2">
       <div className="flex flex-col bg-white md:w-[550px] rounded-lg shadow-2xl items-center justify-center gap-3 py-10 px-3">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="font-semibold text-gray-700 max-sm:text-3xl text-4xl tracking-widest">
+          <h1 className="font-semibold text-gray-700 max-sm:text-2xl text-4xl tracking-widest">
             OTP Verification
           </h1>
-          <p className="text-center max-sm:text-sm text-lg text-gray-500 tracking-widest px-3">
+          <p className="text-center max-sm:text-xs text-lg text-gray-500 tracking-widest px-3">
             Code was sent to your email
           </p>
         </div>
@@ -82,7 +80,7 @@ export const OtpGenerator = () => {
         </div>
 
         {showSuccess && (
-          <p className="text-green-600 transition-all duration-500 opacity-100 translate-y-0">
+          <p className="text-green-600 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
             Verification Successful!
           </p>
         )}
@@ -103,7 +101,7 @@ export const OtpGenerator = () => {
               className="text-blue-500 underline cursor-pointer text-lg ml-1"
               onClick={sendCode}
             >
-              Send again
+              send again
             </span>
           </p>
         </div>
