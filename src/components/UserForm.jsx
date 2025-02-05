@@ -9,7 +9,7 @@ export const UserForm = ({
   generateOtp,
   setGeneratedOtp,
 }) => {
-  const [form, setForm] = useState({ name: "", email: "" });
+  const [form, setForm] = useState({ name: "test", email: "test@gmail.com" });
 
   const inputRef = useRef(null);
 

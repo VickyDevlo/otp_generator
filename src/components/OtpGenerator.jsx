@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Wrapper } from "./Wrapper";
-import { BsArrowLeftShort } from "react-icons/bs";
 
 export const OtpGenerator = ({
   setStep,
@@ -10,7 +9,7 @@ export const OtpGenerator = ({
   generatedOtp,
 }) => {
   const [inputs, setInputs] = useState(Array(6).fill(""));
-  const [isverified, setIsVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState(false);
   const inputRefs = useRef([]);
 
@@ -48,22 +47,35 @@ export const OtpGenerator = ({
   };
 
   const verifyCode = () => {
-    const enteredOtp = inputs.join("");
-    const otpString = String(generatedOtp);
+    const enteredOtp = inputs.join("").trim();
+    const otpString = String(generatedOtp).trim();
+
+    if (!otpString || otpString.length !== 6) {
+      setError(true);
+      return;
+    }
+
+    if (enteredOtp.length !== 6) {
+      setError(true);
+      toast.error("Please enter a 6-digit OTP.");
+      return;
+    }
 
     if (enteredOtp === otpString) {
       setIsVerified(true);
+
       setTimeout(() => {
         setInputs(Array(6).fill(""));
         setIsVerified(false);
         setStep(3);
       }, 1500);
     } else {
+      setError(true);
+
       setTimeout(() => {
-        setError(true);
         setInputs(Array(6).fill(""));
-        inputRefs.current[0].focus();
-      }, 1500);
+        inputRefs.current[0]?.focus();
+      }, 500);
     }
   };
 
@@ -72,7 +84,7 @@ export const OtpGenerator = ({
     setGeneratedOtp(newCode);
     toast.success(`New OTP is - ${newCode}`);
     setInputs(Array(6).fill(""));
-    setError("");
+    setError(false);
     setTimeout(() => inputRefs.current[0]?.focus(), 200);
   };
 
@@ -113,7 +125,7 @@ export const OtpGenerator = ({
         <p className="text-red-500 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
           Invalid OTP. Please try again.
         </p>
-      ) : isverified ? (
+      ) : isVerified ? (
         <p className="text-green-500 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
           Verification Successful!
         </p>
@@ -139,15 +151,6 @@ export const OtpGenerator = ({
           </span>
         </p>
       </div>
-
-      <button
-        className="flex items-center gap-1 text-white bg-red-400 my-2 px-4 py-1 rounded text-md 
-          tracking-wider cursor-pointer transition-all"
-        onClick={() => setStep(1)}
-      >
-        <BsArrowLeftShort size={20} />
-        Back
-      </button>
     </Wrapper>
   );
 };
