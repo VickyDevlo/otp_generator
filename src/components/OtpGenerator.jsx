@@ -1,18 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import { Wrapper } from "./Wrapper";
+import { BsArrowLeftShort } from "react-icons/bs";
 
-export const OtpGenerator = ({ setShowModel }) => {
+export const OtpGenerator = ({
+  setStep,
+  generateOtp,
+  setGeneratedOtp,
+  generatedOtp,
+}) => {
   const [inputs, setInputs] = useState(Array(6).fill(""));
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [isverified, setIsVerified] = useState(false);
+  const [error, setError] = useState(false);
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
-    if (!/^\d?$/.test(value)) return;
+    if (!/^\d*$/.test(value)) return;
 
-    const newInputs = [...inputs];
-    newInputs[index] = value;
+    let newInputs = [...inputs];
+
+    if (value.length === 6) {
+      newInputs = value.split("").slice(0, 6);
+    } else {
+      newInputs[index] = value;
+    }
+
     setInputs(newInputs);
+    setError(false);
 
     if (value && index < inputs.length - 1) {
       inputRefs.current[index + 1]?.focus();
@@ -20,30 +34,45 @@ export const OtpGenerator = ({ setShowModel }) => {
   };
 
   const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace" && !inputs[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
-
-    if (e.key === "Enter") {
-      if (!inputs.includes("")) {
-        verifyCode();
+    if (e.key === "Backspace") {
+      if (!inputs[index] && index > 0) {
+        inputRefs.current[index - 1]?.focus();
+        const newInputs = [...inputs];
+        newInputs[index - 1] = "";
+        setInputs(newInputs);
       }
+    }
+    if (e.key === "Enter" && !inputs.includes("")) {
+      verifyCode();
     }
   };
 
   const verifyCode = () => {
-    setShowSuccess(true);
-    setTimeout(() => {
-      setInputs(Array(6).fill(""));
-      setShowSuccess(false);
-      inputRefs.current[0]?.focus();
-      setShowModel(true);
-    }, 3000);
+    const enteredOtp = inputs.join("");
+    const otpString = String(generatedOtp);
+
+    if (enteredOtp === otpString) {
+      setIsVerified(true);
+      setTimeout(() => {
+        setInputs(Array(6).fill(""));
+        setIsVerified(false);
+        setStep(3);
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        setError(true);
+        setInputs(Array(6).fill(""));
+        inputRefs.current[0].focus();
+      }, 1500);
+    }
   };
 
   const sendCode = () => {
-    toast.success("Code sent to your email");
+    const newCode = generateOtp();
+    setGeneratedOtp(newCode);
+    toast.success(`New OTP is - ${newCode}`);
     setInputs(Array(6).fill(""));
+    setError("");
     setTimeout(() => inputRefs.current[0]?.focus(), 200);
   };
 
@@ -80,32 +109,45 @@ export const OtpGenerator = ({ setShowModel }) => {
         ))}
       </div>
 
-      {showSuccess && (
-        <p className="text-green-600 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
+      {error ? (
+        <p className="text-red-500 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
+          Invalid OTP. Please try again.
+        </p>
+      ) : isverified ? (
+        <p className="text-green-500 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
           Verification Successful!
         </p>
-      )}
+      ) : null}
 
       <button
         disabled={inputs.includes("")}
         onClick={verifyCode}
-        className="text-white bg-blue-500 px-4 py-1 rounded text-md 
+        className="text-white bg-blue-500 my-3 px-4 py-1 rounded text-md 
           tracking-wider cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all"
       >
         Verify Code
       </button>
 
       <div className="text-center">
-        <p className="text-gray-500 text-lg">
+        <p className="text-gray-500 md:text-lg text-sm">
           Didn't receive code?
           <span
-            className="text-blue-500 underline cursor-pointer text-lg ml-1"
+            className="text-blue-500 underline cursor-pointer ml-1"
             onClick={sendCode}
           >
             send again
           </span>
         </p>
       </div>
+
+      <button
+        className="flex items-center gap-1 text-white bg-red-400 my-2 px-4 py-1 rounded text-md 
+          tracking-wider cursor-pointer transition-all"
+        onClick={() => setStep(1)}
+      >
+        <BsArrowLeftShort size={20} />
+        Back
+      </button>
     </Wrapper>
   );
 };
