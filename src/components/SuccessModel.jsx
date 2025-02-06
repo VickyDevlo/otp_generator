@@ -21,7 +21,7 @@ export const SuccessModel = ({ userData, setStep }) => {
         </p>
       </div>
       <div>
-        <HiBadgeCheck className="text-emerald-600 size-32 md:size-40" />
+        <HiBadgeCheck className="text-green-500 size-32 md:size-40" />
       </div>
       <div className="flex flex-col items-center gap-2">
         <p className="text-center max-sm:text-xs text-lg text-gray-500 tracking-widest px-3">

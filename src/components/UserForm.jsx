@@ -15,9 +15,13 @@ export const UserForm = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "name" && !/^[A-Za-z ]*$/.test(value)) {
+      return;
+    }
     setForm({ ...form, [name]: value });
   };
-
+  
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -39,7 +43,8 @@ export const UserForm = ({
     setStep(2);
   };
 
-  const isDisabled = !form.name || !form.email.includes("@");
+  const isDisabled =
+    !form.name || !form.name.trim() || !form.email.includes("@");
 
   useEffect(() => {
     inputRef.current.focus();
@@ -57,20 +62,23 @@ export const UserForm = ({
         <input
           type="text"
           name="name"
+          placeholder="Enter Your Name"
+          inputMode="Text"
+          pattern="[A-Za-z]*"
           ref={inputRef}
-          placeholder="Enter Name"
           value={form.name}
           onChange={handleChange}
-          className="border border-gray-400 font-medium text-gray-700 p-2 rounded w-full mb-3 focus:outline-0 capitalize"
+          className="border border-gray-200 font-medium text-gray-700 p-2 rounded w-full mb-3 focus:outline-0 capitalize"
         />
         <input
           type="email"
           name="email"
-          placeholder="Enter Email"
+          placeholder="Enter Your Email"
+          required
           value={form.email}
           onChange={handleChange}
           onKeyDown={(e) => onKeyDownHandler(e)}
-          className="border border-gray-400 font-medium text-gray-700 p-2 rounded w-full mb-3 focus:outline-0"
+          className="border border-gray-200 font-medium text-gray-700 p-2 rounded w-full mb-3 focus:outline-0"
         />
       </div>
       <button

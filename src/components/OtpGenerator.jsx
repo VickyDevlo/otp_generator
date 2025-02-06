@@ -103,12 +103,12 @@ export const OtpGenerator = ({
         </p>
       </div>
 
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-1 md:gap-3 items-center">
         {inputs.map((value, i) => (
           <input
             key={i}
             ref={(el) => (inputRefs.current[i] = el)}
-            type="text"
+            type="password"
             inputMode="numeric"
             pattern="[0-9]*"
             value={value}
@@ -116,7 +116,8 @@ export const OtpGenerator = ({
             onChange={(e) => handleChange(i, e.target.value)}
             onKeyDown={(e) => handleKeyDown(i, e)}
             autoComplete="off"
-            className="text-xl md:text-2xl text-center border-gray-300 border-2 rounded-lg w-10 h-12 md:w-14 md:h-16 caret-transparent focus:ring-2 focus:ring-green-300 outline-none transition-all"
+            className="text-2xl md:text-5xl text-gray-600 text-center
+             border-b border-gray-300 w-10 h-12 md:w-14 md:h-16 caret-transparent focus:border-b-2 focus:border-green-300 outline-none transition-all"
           />
         ))}
       </div>
