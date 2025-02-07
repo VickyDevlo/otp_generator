@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Wrapper } from "./Wrapper";
+import { Input } from "./Input";
 
 export const OtpGenerator = ({
   setStep,
@@ -11,6 +12,7 @@ export const OtpGenerator = ({
   const [inputs, setInputs] = useState(Array(6).fill(""));
   const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
@@ -63,7 +65,6 @@ export const OtpGenerator = ({
 
     if (enteredOtp === otpString) {
       setIsVerified(true);
-
       setTimeout(() => {
         setInputs(Array(6).fill(""));
         setIsVerified(false);
@@ -71,11 +72,21 @@ export const OtpGenerator = ({
       }, 1500);
     } else {
       setError(true);
+      setFailedAttempts((prev) => prev + 1);
 
-      setTimeout(() => {
-        setInputs(Array(6).fill(""));
-        inputRefs.current[0]?.focus();
-      }, 500);
+      if (failedAttempts + 1 === 3) {
+        setTimeout(() => {
+          toast.error("Failed attempt. Please wait a moment and try again");
+          setInputs(Array(6).fill(""));
+          setStep(1);
+          setFailedAttempts(0);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          setInputs(Array(6).fill(""));
+          inputRefs.current[0]?.focus();
+        }, 500);
+      }
     }
   };
 
@@ -85,6 +96,7 @@ export const OtpGenerator = ({
     toast.success(`New OTP is - ${newCode}`);
     setInputs(Array(6).fill(""));
     setError(false);
+    setFailedAttempts(0);
     setTimeout(() => inputRefs.current[0]?.focus(), 200);
   };
 
@@ -105,7 +117,7 @@ export const OtpGenerator = ({
 
       <div className="flex gap-1 md:gap-3 items-center">
         {inputs.map((value, i) => (
-          <input
+          <Input
             key={i}
             ref={(el) => (inputRefs.current[i] = el)}
             type="password"
@@ -116,27 +128,34 @@ export const OtpGenerator = ({
             onChange={(e) => handleChange(i, e.target.value)}
             onKeyDown={(e) => handleKeyDown(i, e)}
             autoComplete="off"
-            className="text-2xl md:text-5xl text-gray-600 text-center
-             border-b border-gray-300 w-10 h-12 md:w-14 md:h-16 caret-transparent focus:border-b-2 focus:border-green-300 outline-none transition-all"
+            className="text-2xl md:text-5xl text-gray-600 text-center border-b border-gray-300 w-10 h-12 md:w-14 md:h-16 caret-transparent focus:border-b-2 focus:border-green-300 outline-none transition-all"
           />
         ))}
       </div>
 
-      {error ? (
-        <p className="text-red-500 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
+      {error && failedAttempts <= 2 ? (
+        <p className="text-red-500 text-center tracking-widest">
           Invalid OTP. Please try again.
         </p>
       ) : isVerified ? (
-        <p className="text-green-500 tracking-widest transition-all duration-500 opacity-100 translate-y-0">
+        <p className="text-green-500 text-center tracking-widest">
           Verification Successful!
         </p>
       ) : null}
 
+      {failedAttempts > 0 && failedAttempts < 3 && !isVerified && (
+        <p
+          className={`text-gray-600 tracking-widest  ${
+            failedAttempts === 2 ? "text-red-500" : ""
+          }`}
+        >
+          Attempt left - {3 - failedAttempts}
+        </p>
+      )}
       <button
-        disabled={inputs.includes("")}
+        disabled={inputs.includes("") || failedAttempts >= 3}
         onClick={verifyCode}
-        className="text-white bg-blue-500 my-3 px-4 py-1 rounded text-md 
-          tracking-wider cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+        className="text-white bg-blue-500 my-3 px-4 py-1 rounded text-md tracking-wider cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all"
       >
         Verify Code
       </button>

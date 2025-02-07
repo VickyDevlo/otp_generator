@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Wrapper } from "./Wrapper";
 import { BsArrowRightShort } from "react-icons/bs";
+import { Input } from "./Input";
 
 export const UserForm = ({
   setUserData,
@@ -21,7 +22,7 @@ export const UserForm = ({
     }
     setForm({ ...form, [name]: value });
   };
-  
+
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -59,18 +60,18 @@ export const UserForm = ({
         User Details
       </h1>
       <div className="md:px-12 w-full">
-        <input
+        <Input
           type="text"
+          ref={inputRef}
           name="name"
           placeholder="Enter Your Name"
           inputMode="Text"
           pattern="[A-Za-z]*"
-          ref={inputRef}
           value={form.name}
           onChange={handleChange}
-          className="border border-gray-200 font-medium text-gray-700 p-2 rounded w-full mb-3 focus:outline-0 capitalize"
+          className="border border-gray-200 rounded capitalize"
         />
-        <input
+        <Input
           type="email"
           name="email"
           placeholder="Enter Your Email"
@@ -78,7 +79,7 @@ export const UserForm = ({
           value={form.email}
           onChange={handleChange}
           onKeyDown={(e) => onKeyDownHandler(e)}
-          className="border border-gray-200 font-medium text-gray-700 p-2 rounded w-full mb-3 focus:outline-0"
+          className="border border-gray-200 rounded"
         />
       </div>
       <button
