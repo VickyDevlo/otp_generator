@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 
-export const Input = forwardRef(
+const Input = forwardRef(
   (
     {
       type,
@@ -25,10 +25,12 @@ export const Input = forwardRef(
         pattern={pattern}
         value={value}
         onChange={onChange}
-        className={`${className}  font-medium text-gray-700 
-        p-2  w-full mb-3 focus:outline-0 `}
+        className={`${className} font-medium text-gray-700 
+        p-2  w-full mb-3 focus:outline-0`}
         {...rest}
       />
     );
   }
 );
+
+export default Input;

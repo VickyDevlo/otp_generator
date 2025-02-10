@@ -1,5 +1,5 @@
 import React from "react";
-import { Wrapper } from "./Wrapper";
+import { Wrapper, Heading } from "../shared";
 import { HiBadgeCheck } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 
@@ -13,9 +13,7 @@ export const SuccessModel = ({ userData, setStep }) => {
         <IoClose size={24} />
       </button>
       <div className="flex flex-col items-center gap-2">
-        <h1 className="font-semibold text-gray-500 max-sm:text-2xl text-4xl tracking-widest">
-          Congratulation
-        </h1>
+        <Heading>Congratulation</Heading>
         <p className="text-center font-semibold max-sm:text-xs text-lg text-gray-700 tracking-widest px-3 capitalize">
           {userData.name}
         </p>

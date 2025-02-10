@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
-import { Wrapper } from "./Wrapper";
+import { Wrapper, Heading, Input, Button } from "../shared";
 import { BsArrowRightShort } from "react-icons/bs";
-import { Input } from "./Input";
+import { toast } from "react-toastify";
 
 export const UserForm = ({
   setUserData,
@@ -45,7 +44,7 @@ export const UserForm = ({
   };
 
   const isDisabled =
-    !form.name || !form.name.trim() || !form.email.includes("@");
+    !form.name || !form.name.trim() || !form.email.includes("@gmail.com");
 
   useEffect(() => {
     inputRef.current.focus();
@@ -53,12 +52,7 @@ export const UserForm = ({
 
   return (
     <Wrapper>
-      <h1
-        className="font-semibold text-center text-gray-700 text-2xl 
-      tracking-widest mb-3"
-      >
-        User Details
-      </h1>
+      <Heading className="mb-1">User Details</Heading>
       <div className="md:px-12 w-full">
         <Input
           type="text"
@@ -82,15 +76,10 @@ export const UserForm = ({
           className="border border-gray-200 rounded"
         />
       </div>
-      <button
-        disabled={isDisabled}
-        className="flex items-center justify-center gap-1 text-white
-         bg-blue-500 px-4 py-1 rounded text-md tracking-wider cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all"
-        onClick={handleSubmit}
-      >
+      <Button isDisabled={isDisabled} onClick={handleSubmit}>
         Next
         <BsArrowRightShort size={20} />
-      </button>
+      </Button>
     </Wrapper>
   );
 };

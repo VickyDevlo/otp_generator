@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Wrapper, Heading, Input, Button } from "../shared";
 import { toast } from "react-toastify";
-import { Wrapper } from "./Wrapper";
-import { Input } from "./Input";
 
 export const OtpGenerator = ({
   setStep,
@@ -107,10 +106,8 @@ export const OtpGenerator = ({
   return (
     <Wrapper>
       <div className="flex flex-col items-center gap-2">
-        <h1 className="font-semibold text-gray-700 max-sm:text-2xl text-4xl tracking-widest">
-          OTP Verification
-        </h1>
-        <p className="text-center max-sm:text-xs text-lg text-gray-500 tracking-widest px-3">
+        <Heading>OTP Verification</Heading>
+        <p className="text-center max-sm:text-xs text-sm text-gray-500 tracking-widest px-3">
           Code was sent to your email
         </p>
       </div>
@@ -152,13 +149,13 @@ export const OtpGenerator = ({
           Attempt left - {3 - failedAttempts}
         </p>
       )}
-      <button
-        disabled={inputs.includes("") || failedAttempts >= 3}
+      <Button
+        isDisabled={inputs.includes("") || failedAttempts >= 3}
         onClick={verifyCode}
-        className="text-white bg-blue-500 my-3 px-4 py-1 rounded text-md tracking-wider cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+        className="mt-2"
       >
         Verify Code
-      </button>
+      </Button>
 
       <div className="text-center">
         <p className="text-gray-500 md:text-lg text-sm">

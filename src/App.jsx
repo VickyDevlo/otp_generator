@@ -33,7 +33,7 @@ function App() {
           generatedOtp={generatedOtp}
         />
       )}
-      {step === 3 && <SuccessModel userData={userData} setStep={setStep}/>}
+      {step === 3 && <SuccessModel userData={userData} setStep={setStep} />}
     </>
   );
 }
