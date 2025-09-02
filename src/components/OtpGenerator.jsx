@@ -156,13 +156,14 @@ export const OtpGenerator = () => {
             type="password"
             inputMode="numeric"
             pattern="[0-9]*"
+            name="password"
             value={value}
             maxLength={1}
             onChange={(e) => handleChange(i, e.target.value)}
             onKeyDown={(e) => handleKeyDown(i, e)}
             onPaste={handlePaste}
             autoComplete="off"
-            className="text-xl md:text-3xl text-gray-600 text-center border border-gray-300 w-10 h-12 md:w-14 md:h-16 caret-transparent rounded-lg focus:border-2 focus:border-green-300 outline-none transition-all"
+            className="text-xl md:text-3xl text-gray-600 text-center border border-gray-300 w-10 h-12 md:w-14 md:h-16 caret-transparent rounded md:rounded-lg focus:border-2 focus:border-green-300 outline-none transition-all"
           />
         ))}
       </div>
